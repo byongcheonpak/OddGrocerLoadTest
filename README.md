@@ -1,7 +1,7 @@
 # OddGrocer Artillery 부하테스트 프로젝트
 
 ## 📋 프로젝트 개요
-OddGrocer 쇼핑몰 사이트 (https://m.oddgrocer.com)를 위한 종합적인 Artillery 부하테스트 프로젝트입니다.
+OddGrocer 쇼핑몰 사이트 (https://m.oddgrocer.com) 를 위한 종합적인 Artillery 부하테스트 프로젝트입니다.
 
 ## 🎯 주요 테스트 시나리오
 1. **HTTP 부하 테스트**
