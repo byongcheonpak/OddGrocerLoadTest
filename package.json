@@ -1,0 +1,45 @@
+{
+  "name": "oddgrocer-artillery-loadtest",
+  "version": "1.0.0",
+  "description": "Artillery load testing suite for OddGrocer shopping mall",
+  "main": "index.js",
+  "scripts": {
+    "test": "artillery run scenarios/http/main-page-load.yml",
+    "test:http": "artillery run scenarios/http/main-page-load.yml --output reports/http-report.json",
+    "test:store": "artillery run scenarios/http/store-navigation.yml --output reports/store-report.json",
+    "test:api": "artillery run scenarios/http/api-endpoints.yml --output reports/api-report.json",
+    "test:browser": "artillery run scenarios/playwright/browser-main-to-store.js --output reports/browser-report.json",
+    "test:all": "npm run test:http && npm run test:store && npm run test:api",
+    "test:spike": "artillery run scenarios/http/main-page-load.yml --config config/spike-load.yml",
+    "test:stress": "artillery run scenarios/http/main-page-load.yml --config config/stress-load.yml",
+    "report": "artillery report reports/http-report.json --output reports/http-report.html",
+    "report:all": "artillery report reports/*.json --output reports/combined-report.html",
+    "clean": "rm -rf reports/*.json reports/*.html"
+  },
+  "keywords": [
+    "artillery",
+    "load-testing",
+    "performance",
+    "oddgrocer",
+    "playwright",
+    "browser-testing"
+  ],
+  "author": "Load Test Team",
+  "license": "MIT",
+  "devDependencies": {
+    "artillery": "^2.0.15",
+    "artillery-engine-playwright": "^1.5.0",
+    "playwright": "^1.45.0",
+    "@playwright/test": "^1.45.0",
+    "csv-parser": "^3.0.0",
+    "faker": "^6.6.6",
+    "dotenv": "^16.4.5"
+  },
+  "dependencies": {
+    "winston": "^3.11.0",
+    "moment": "^2.29.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

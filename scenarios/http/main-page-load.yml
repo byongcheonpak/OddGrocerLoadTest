@@ -1,0 +1,49 @@
+config:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "메인페이지 기본 부하 테스트"
+  defaults:
+    headers:
+      User-Agent: 'Artillery Load Test - OddGrocer Mobile'
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+      Accept-Language: 'ko-KR,ko;q=0.9,en;q=0.8'
+      Accept-Encoding: 'gzip, deflate, br'
+      Connection: 'keep-alive'
+  processor: '../../functions/custom-functions.js'
+
+scenarios:
+  - name: "메인페이지 로드 및 성능 측정"
+    weight: 100
+    flow:
+      - get:
+          url: "/main?id=2"
+          capture:
+            - json: "$.title"
+              as: "pageTitle"
+            - header: "content-type"
+              as: "contentType"
+          expect:
+            - statusCode: 200
+            - contentType: text/html
+          afterResponse: "captureResponseTime"
+      
+      - think: 2
+      
+      - get:
+          url: "/favicon.ico"
+          expect:
+            - statusCode: [200, 404]
+      
+      - think: 1
+      
+      # 메인페이지의 정적 리소스 로드 시뮬레이션
+      - loop:
+        - get:
+            url: "/_next/static/css/{{ $randomString() }}.css"
+            expect:
+              - statusCode: [200, 404]
+        count: 3
+      
+      - think: 3

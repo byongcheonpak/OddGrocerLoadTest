@@ -1,0 +1,145 @@
+# 다양한 부하 프로필 설정
+
+# 가벼운 부하 테스트 (개발 환경)
+light_load:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 60
+      arrivalRate: 2
+      name: "가벼운 부하 - 준비"
+    - duration: 120
+      arrivalRate: 5
+      name: "가벼운 부하 - 실행"
+    - duration: 60
+      arrivalRate: 2
+      name: "가벼운 부하 - 종료"
+
+# 중간 부하 테스트 (스테이징 환경)
+medium_load:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 15
+      name: "중간 부하 - 준비"
+    - duration: 300
+      arrivalRate: 20
+      name: "중간 부하 - 실행" 
+    - duration: 120
+      arrivalRate: 20
+      rampTo: 5
+      name: "중간 부하 - 종료"
+
+# 높은 부하 테스트 (프로덕션 환경)
+heavy_load:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 180
+      arrivalRate: 10
+      rampTo: 30
+      name: "높은 부하 - 준비"
+    - duration: 600
+      arrivalRate: 50
+      name: "높은 부하 - 실행"
+    - duration: 180
+      arrivalRate: 50
+      rampTo: 10
+      name: "높은 부하 - 종료"
+
+# 스파이크 테스트
+spike_load:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 120
+      arrivalRate: 10
+      name: "스파이크 - 기본 부하"
+    - duration: 60
+      arrivalRate: 100
+      name: "스파이크 - 급증"
+    - duration: 120
+      arrivalRate: 10
+      name: "스파이크 - 회복"
+
+# 스트레스 테스트 (한계 테스트)
+stress_load:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 300
+      arrivalRate: 20
+      rampTo: 100
+      name: "스트레스 - 점진적 증가"
+    - duration: 600
+      arrivalRate: 150
+      name: "스트레스 - 최대 부하"
+    - duration: 300
+      arrivalRate: 150
+      rampTo: 20
+      name: "스트레스 - 점진적 감소"
+
+# 내구성 테스트 (장시간 테스트)
+endurance_load:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 300
+      arrivalRate: 5
+      rampTo: 25
+      name: "내구성 - 준비"
+    - duration: 3600
+      arrivalRate: 30
+      name: "내구성 - 장시간 실행"
+    - duration: 300
+      arrivalRate: 30
+      rampTo: 5
+      name: "내구성 - 종료"
+
+# 볼륨 테스트 (대용량 데이터)
+volume_load:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 180
+      arrivalRate: 15
+      rampTo: 40
+      name: "볼륨 - 준비"
+    - duration: 900
+      arrivalRate: 60
+      name: "볼륨 - 대용량 처리"
+    - duration: 180
+      arrivalRate: 60
+      rampTo: 15
+      name: "볼륨 - 종료"
+
+# 평상시 트래픽 시뮬레이션
+normal_traffic:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 1800  # 30분
+      arrivalRate: 8
+      rampTo: 15
+      name: "평상시 - 오전"
+    - duration: 3600  # 1시간
+      arrivalRate: 25
+      name: "평상시 - 점심시간"
+    - duration: 1800  # 30분
+      arrivalRate: 15
+      rampTo: 8
+      name: "평상시 - 오후"
+
+# 피크 시간 트래픽
+peak_traffic:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 300
+      arrivalRate: 20
+      rampTo: 50
+      name: "피크 - 준비"
+    - duration: 1200  # 20분
+      arrivalRate: 80
+      name: "피크 - 최고 트래픽"
+    - duration: 600
+      arrivalRate: 80
+      rampTo: 30
+      name: "피크 - 감소"
+    - duration: 300
+      arrivalRate: 30
+      rampTo: 10
+      name: "피크 - 종료"

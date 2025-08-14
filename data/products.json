@@ -1,0 +1,122 @@
+{
+  "popular_searches": [
+    "사과", "바나나", "딸기", "포도", "오렌지",
+    "양파", "당근", "배추", "무", "브로콜리",
+    "소고기", "돼지고기", "닭고기", "생선", "새우",
+    "우유", "요거트", "치즈", "계란", "버터",
+    "쌀", "라면", "빵", "시리얼", "파스타"
+  ],
+  "categories": [
+    {
+      "id": "fruits",
+      "name": "과일",
+      "popular_items": ["사과", "바나나", "딸기", "포도", "오렌지", "수박", "참외", "복숭아"]
+    },
+    {
+      "id": "vegetables", 
+      "name": "채소",
+      "popular_items": ["양파", "당근", "배추", "무", "브로콜리", "상추", "시금치", "고구마"]
+    },
+    {
+      "id": "meat",
+      "name": "정육/수산",
+      "popular_items": ["소고기", "돼지고기", "닭고기", "생선", "새우", "오징어", "조개", "게"]
+    },
+    {
+      "id": "dairy",
+      "name": "유제품",
+      "popular_items": ["우유", "요거트", "치즈", "계란", "버터", "생크림", "두유", "아이스크림"]
+    },
+    {
+      "id": "grains",
+      "name": "쌀/곡물",
+      "popular_items": ["쌀", "현미", "귀리", "퀴노아", "보리", "기장", "수수", "콩"]
+    },
+    {
+      "id": "processed",
+      "name": "가공식품",
+      "popular_items": ["라면", "통조림", "냉동식품", "즉석식품", "소스", "양념", "조미료", "드레싱"]
+    },
+    {
+      "id": "bakery",
+      "name": "베이커리",
+      "popular_items": ["빵", "케이크", "쿠키", "도넛", "마카롱", "크로와상", "베이글", "머핀"]
+    },
+    {
+      "id": "beverages",
+      "name": "음료",
+      "popular_items": ["물", "탄산음료", "주스", "커피", "차", "에너지드링크", "스포츠음료", "이온음료"]
+    },
+    {
+      "id": "snacks",
+      "name": "과자/간식",
+      "popular_items": ["과자", "초콜릿", "캔디", "견과류", "젤리", "껌", "팝콘", "프리첼"]
+    },
+    {
+      "id": "health",
+      "name": "건강식품",
+      "popular_items": ["비타민", "단백질보충제", "오메가3", "프로바이오틱스", "홍삼", "꿀", "프로폴리스", "효소"]
+    }
+  ],
+  "stores": [
+    {
+      "id": 175,
+      "name": "신선마트 강남점",
+      "location": "강남구",
+      "specialties": ["fruits", "vegetables", "dairy"],
+      "popular_products": ["유기농 사과", "국산 배추", "1등급 한우", "신선한 우유"]
+    },
+    {
+      "id": 176,
+      "name": "할인마트 홍대점", 
+      "location": "마포구",
+      "specialties": ["processed", "beverages", "snacks"],
+      "popular_products": ["라면세트", "음료수", "과자할인팩", "냉동만두"]
+    },
+    {
+      "id": 177,
+      "name": "프리미엄마트 압구정점",
+      "location": "강남구", 
+      "specialties": ["meat", "health", "bakery"],
+      "popular_products": ["프리미엄 소고기", "수입과일", "건강보조식품", "수제빵"]
+    },
+    {
+      "id": 178,
+      "name": "동네마트 성수점",
+      "location": "성동구",
+      "specialties": ["grains", "vegetables", "dairy"],
+      "popular_products": ["국산쌀", "신선채소", "로컬브랜드 우유", "계란"]
+    },
+    {
+      "id": 179,
+      "name": "24시마트 잠실점",
+      "location": "송파구",
+      "specialties": ["processed", "beverages", "snacks"],
+      "popular_products": ["즉석식품", "에너지드링크", "야식메뉴", "편의용품"]
+    }
+  ],
+  "test_scenarios": {
+    "search_patterns": [
+      {
+        "pattern": "category_browse",
+        "description": "카테고리별 상품 탐색",
+        "flow": ["메인페이지", "카테고리선택", "상품목록", "상품상세"]
+      },
+      {
+        "pattern": "search_specific",
+        "description": "특정 상품 검색",
+        "flow": ["메인페이지", "검색어입력", "검색결과", "상품선택"]
+      },
+      {
+        "pattern": "store_visit",
+        "description": "매장 방문 후 쇼핑",
+        "flow": ["메인페이지", "매장선택", "매장페이지", "상품탐색", "장바구니"]
+      },
+      {
+        "pattern": "comparison_shopping", 
+        "description": "가격 비교 쇼핑",
+        "flow": ["검색", "여러상품비교", "리뷰확인", "최저가선택"]
+      }
+    ]
+  }
+}

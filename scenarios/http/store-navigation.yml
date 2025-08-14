@@ -1,0 +1,74 @@
+config:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 120
+      arrivalRate: 8
+      name: "메인페이지에서 매장 이동 시나리오"
+  defaults:
+    headers:
+      User-Agent: 'Artillery Load Test - OddGrocer Store Navigation'
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+      Accept-Language: 'ko-KR,ko;q=0.9,en;q=0.8'
+      Referer: 'https://m.oddgrocer.com/main?id=2'
+  processor: '../../functions/custom-functions.js'
+
+scenarios:
+  - name: "메인 → 매장 이동 사용자 여정"
+    weight: 100
+    flow:
+      # 1단계: 메인페이지 방문
+      - get:
+          url: "/main?id=2"
+          capture:
+            - header: "set-cookie"
+              as: "sessionCookie"
+          expect:
+            - statusCode: 200
+          afterResponse: "logMainPageLoad"
+      
+      - think: 3
+      
+      # 2단계: 메인페이지에서 매장 정보 확인 (사용자가 매장을 찾는 행동 시뮬레이션)
+      - get:
+          url: "/api/stores/nearby"
+          headers:
+            Cookie: "{{ sessionCookie }}"
+          expect:
+            - statusCode: [200, 404]
+      
+      - think: 5
+      
+      # 3단계: 특정 매장 페이지로 이동
+      - get:
+          url: "/store/175"
+          headers:
+            Cookie: "{{ sessionCookie }}"
+            Referer: "https://m.oddgrocer.com/main?id=2"
+          capture:
+            - json: "$.store.name"
+              as: "storeName"
+            - regex: "store-id-(\\d+)"
+              as: "storeId"
+          expect:
+            - statusCode: 200
+          afterResponse: "logStorePageLoad"
+      
+      - think: 4
+      
+      # 4단계: 매장 상품 정보 로드
+      - get:
+          url: "/api/store/175/products"
+          headers:
+            Cookie: "{{ sessionCookie }}"
+          expect:
+            - statusCode: [200, 404]
+      
+      - think: 2
+      
+      # 5단계: 매장 이미지 및 추가 리소스 로드
+      - get:
+          url: "/api/store/175/images"
+          headers:
+            Cookie: "{{ sessionCookie }}"
+          expect:
+            - statusCode: [200, 404]

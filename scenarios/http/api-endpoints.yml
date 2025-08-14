@@ -1,0 +1,80 @@
+config:
+  target: 'https://m.oddgrocer.com'
+  phases:
+    - duration: 180
+      arrivalRate: 10
+      name: "API 엔드포인트 부하 테스트"
+  defaults:
+    headers:
+      User-Agent: 'Artillery API Load Test'
+      Accept: 'application/json'
+      Content-Type: 'application/json'
+      Accept-Language: 'ko-KR,ko;q=0.9'
+  processor: '../../functions/custom-functions.js'
+
+scenarios:
+  - name: "메인페이지 API 호출 패턴"
+    weight: 40
+    flow:
+      - get:
+          url: "/api/main/banners"
+          expect:
+            - statusCode: 200
+            - contentType: json
+      - think: 1
+      
+      - get:
+          url: "/api/main/featured-products"
+          expect:
+            - statusCode: 200
+      - think: 2
+
+  - name: "매장 관련 API 호출"
+    weight: 30
+    flow:
+      - get:
+          url: "/api/stores/list"
+          expect:
+            - statusCode: 200
+      - think: 1
+      
+      - get:
+          url: "/api/store/175/info"
+          capture:
+            - json: "$.store.category"
+              as: "storeCategory"
+          expect:
+            - statusCode: 200
+      - think: 2
+      
+      - get:
+          url: "/api/store/175/products?page=1&limit=20"
+          expect:
+            - statusCode: 200
+
+  - name: "상품 검색 및 필터링 API"
+    weight: 20
+    flow:
+      - get:
+          url: "/api/search?q={{ $randomWord() }}&category=all"
+          expect:
+            - statusCode: [200, 404]
+      - think: 2
+      
+      - get:
+          url: "/api/products/popular"
+          expect:
+            - statusCode: 200
+      - think: 1
+
+  - name: "사용자 세션 관련 API"
+    weight: 10
+    flow:
+      - post:
+          url: "/api/session/create"
+          json:
+            deviceId: "{{ $randomUuid() }}"
+            platform: "mobile"
+          expect:
+            - statusCode: [200, 201]
+      - think: 1
